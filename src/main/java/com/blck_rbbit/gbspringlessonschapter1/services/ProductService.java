@@ -4,6 +4,7 @@ import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -45,6 +46,10 @@ public class ProductService {
     
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
+    }
+    
+    public Page<Product> findByIdForPage(Long id) {
+        return productRepository.findById(id, page );
     }
     
     @Transactional

@@ -17,6 +17,14 @@
     margin-right: 10px;
 }
 
+.filter-by-id-form {
+    justify-content: left;
+}
+
+.filter-by-id-form input {
+    width: 150px;
+}
+
 .pagination {
     display: flex;
     justify-content: center;

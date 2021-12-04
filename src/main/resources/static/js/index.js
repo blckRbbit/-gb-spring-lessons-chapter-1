@@ -9,12 +9,17 @@ angular.module('app', []).controller('productController', function ($scope, $htt
     };
 
     $scope.findProductById = function(id) {
-        $http.get(contextPath + '/products/' + id)
-            .then(function (response) {
-                $scope.ProductsList = response.data;
-                console.log(response.data);
-            });
-        }
+        $http({
+            url: contextPath + '/products/' + id,
+            method: 'POST',
+            params: {
+                id: id,
+            }
+        }).then(function (response) {
+              $scope.ProductsList = response.data;
+        });
+        $scope.loadProducts();
+    }
 
     $scope.deleteProduct = function (id) {
         $http.get(contextPath + '/products/delete/' + id)

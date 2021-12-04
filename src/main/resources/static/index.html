@@ -17,7 +17,14 @@
     <div class="container" ng-controller="productController">
         <br>
         <div class="row">
-            <div class="col col-lg-8"></div>
+            <div class="form-wrapper col col-lg-4">
+                <form class="filter-form filter-by-id-form" novalidate ng-submit="findProductById(id)">
+                    <input class="form-control" type="number" placeholder="Enter product id" min="0"
+                           max="1000000" ng-model="id">
+                    <button type="submit" class="btn btn-primary">find</button>
+                </form>
+            </div>
+            <div class="col col-lg-4"></div>
             <div class="form-wrapper col col-lg-4">
                 <h6>Filtered products:</h6>
                 <br>
