@@ -4,6 +4,7 @@ import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,11 @@ public class ProductController {
         return productService.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found, id: " + id)
         );
+    }
+    
+    @PostMapping("/products/{id}")
+    public List<Product> getProductByIdForPage(@PathVariable Long id) {
+        return productService.findByIdForPage(id).getContent();
     }
     
     @GetMapping("/products/delete/{id}")
