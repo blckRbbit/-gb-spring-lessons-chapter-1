@@ -1,5 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.controllers;
 
+import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDTO;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.services.ProductService;
@@ -7,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1/products")
 public class ProductController {
     
     private ProductService productService;
@@ -17,59 +19,46 @@ public class ProductController {
     public ProductController() {
     }
     
-    @GetMapping("/products/all")
-    public List<Product> getProductsList() {
-        return productService.findAllProducts();
+    @GetMapping
+    public Page<ProductDTO> getProducts(
+            @RequestParam(name = "min_cost", required = false) Integer minCost,
+            @RequestParam(name = "max_cost", required = false) Integer maxCost,
+            @RequestParam(name = "id", required = false) Long id,
+            @RequestParam(name = "title", required = false) String titlePart,
+            @RequestParam(name = "page", defaultValue = "1") Integer page
+         
+    ) {
+        if (page < 1) page = 1;
+        return productService.find(minCost, maxCost, id, titlePart, page).map(
+                ProductDTO::new
+        );
     }
     
-    @GetMapping("/products")
-    public List<Product> getProductsForFirstPage() {
-        return productService.findAllProductsByFirstPage();
-    }
-    
-    @GetMapping("/products/next")
-    public List<Product> getProductsForNextPage() {
-        return productService.findAllProductsByNextPage();
-    }
-    
-    @GetMapping("/products/previous")
-    public List<Product> getProductsForPreviousPage() {
-        return productService.findAllProductsByPreviousPage();
-    }
-    
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productService.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found, id: " + id)
         );
     }
     
-    @PostMapping("/products/{id}")
-    public List<Product> getProductByIdForPage(@PathVariable Long id) {
-        return productService.findByIdForPage(id).getContent();
+    @PostMapping
+    public Product saveNewProduct(@RequestBody ProductDTO productDTO) {
+        productDTO.setId(null);
+        Product product = new Product(productDTO.getTitle(), productDTO.getCost());
+        return productService.save(product);
     }
     
-    @GetMapping("/products/delete/{id}")
-    public List<Product> deleteProductById(@PathVariable Long id) {
+    @PutMapping
+    public Product updateProduct(@RequestBody ProductDTO productDTO) {
+        Optional<Product> product = productService.findById(productDTO.getId());
+        return product.map(value -> productService.save(value)).orElseThrow(
+                () -> new ResourceNotFoundException("Product for update not found, id: " + productDTO.getId())
+        );
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         productService.deleteProductById(id);
-        return productService.findAllProducts();
-    }
-    
-    @PostMapping("/products/change_cost")
-    public void changeCost(@RequestParam Long productId, @RequestParam Integer delta) {
-        productService.changeCost(productId, delta);
-    }
-    
-    @GetMapping("/products/filter_by_cost")
-    public List<Product> getFilteredProductsByCost
-            (@RequestParam(defaultValue = "0") Integer min, @RequestParam(defaultValue = "2147483647") Integer max) {
-        return productService.findAllProductsByPrice(min, max);
-    }
-    
-    @PostMapping("/products")
-    @ResponseBody
-    public void addNewProduct(@RequestBody Product product) {
-        productService.add(product);
     }
     
     @Autowired
