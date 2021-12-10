@@ -43,7 +43,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="product in ProductsPage">
+                    <tr ng-repeat="product in productsPage">
                         <td>{{product.id}}</td>
                         <td>{{product.title}}</td>
                         <td>{{product.cost}}</td>
@@ -57,35 +57,13 @@
                 </table>
             </div>
         </div>
+        <nav class="row pages">
+            <ul class="pagination">
+                <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                    <a class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </body>
 </html>
-
-
-
-
-<!--<div class="form-wrapper row">-->
-<!--    <div class="form-wrapper col col-lg-4">-->
-<!--        <form class="filter-form filter-by-id-form" novalidate ng-submit="loadProducts()">-->
-
-<!--        </form>-->
-<!--    </div>-->
-<!--    <div class="form-wrapper col col-lg-4"></div>-->
-<!--    <div class="form-wrapper col col-lg-4">-->
-<!--        <form class="filter-form" novalidate ng-submit="loadProducts()">-->
-<!--            <input class="form-control" type="number" placeholder="min cost" min="0"-->
-<!--                   max="10000" ng-model="filter.min_cost">-->
-<!--            <br>-->
-<!--            <input class="form-control" type="number" placeholder="max cost"-->
-<!--                   min="0" max="1000000" ng-model="filter.max_cost">-->
-<!--            <br>-->
-<!--            <button type="submit" class="btn btn-primary">find</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<br>-->
-
-<!--        <p class="pagination">-->
-<!--            <button class="btn btn-secondary" ng-click="goToPreviousPage()"><< prev page</button>-->
-<!--            <button class="btn btn-secondary" ng-click="goToNextPage()">next page >></button>-->
-<!--        </p>-->
