@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
@@ -49,11 +47,8 @@ public class ProductController {
     }
     
     @PutMapping
-    public Product updateProduct(@RequestBody ProductDTO productDTO) {
-        Optional<Product> product = productService.findById(productDTO.getId());
-        return product.map(value -> productService.save(value)).orElseThrow(
-                () -> new ResourceNotFoundException("Product for update not found, id: " + productDTO.getId())
-        );
+    public void updateProduct(@RequestBody ProductDTO productDTO) {
+        productService.updateProductFromDTO(productDTO);
     }
     
     @DeleteMapping("/{id}")

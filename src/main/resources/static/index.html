@@ -31,6 +31,17 @@
                     <br>
                     <button type="submit" class="search-btn btn btn-primary">find</button>
                 </form>
+                <br>
+                <h6>Change product:</h6>
+                <form class="update-form" novalidate ng-submit="updateProduct()">
+                    <input class="form-control" type="number" hidden placeholder="product id" ng-model="updated_product.id">
+                    <br>
+                    <input class="form-control" type="text" placeholder="product title" ng-model="updated_product.title">
+                    <br>
+                    <input class="form-control" type="number" placeholder="product cost" ng-model="updated_product.cost">
+                    <br>
+                    <button type="submit" class="search-btn btn btn-primary">save changes</button>
+                </form>
             </div>
             <div class="col col-lg-9 col-products">
                 <table class="table table-hover" cellpadding="0" cellspacing="0">
@@ -49,7 +60,16 @@
                         <td>{{product.cost}}</td>
                         <td>
                             <p>
-                                <button class="btn btn-secondary" ng-click="deleteProduct(product.id)">delete</button>
+                                <button class="btn btn-secondary" ng-click="deleteProduct(product.id)">
+                                    delete
+                                </button>
+                                <button type="button" class="btn btn-secondary" ng-click="prepareProductForUpdate(product.id)">
+                                    change
+                                </button>
+<!--                                <button type="button" class="btn btn-secondary" data-toggle="modal"-->
+<!--                                        data-target="#changeProductModal" ng-click="prepareProductForUpdate(product.id)">-->
+<!--                                    change-->
+<!--                                </button>-->
                             </p>
                         </td>
                     </tr>
@@ -76,5 +96,32 @@
             </ul>
         </nav>
     </div>
+    <!-- Modal -->
+<!--    <div class="modal fade" id="changeProductModal" tabindex="-1" role="dialog" aria-labelledby="changeProductModalLabel"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="changeProductModalLabel">Change product:</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <form class="update-form" novalidate ng-submit="updateProduct()">-->
+<!--                        <input class="form-control" type="number" hidden placeholder="product id" ng-model="updated_product.id">-->
+<!--                        <br>-->
+<!--                        <input class="form-control" type="text" placeholder="product title" ng-model="updated_product.title">-->
+<!--                        <br>-->
+<!--                        <input class="form-control" type="number" placeholder="product cost" ng-model="updated_product.cost">-->
+<!--                        <br>-->
+<!--                        <button type="submit" class="btn btn-primary btn-close" data-bs-dismiss="modal" aria-label="Close">-->
+<!--                            save changes-->
+<!--                        </button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </body>
 </html>
