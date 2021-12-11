@@ -27,6 +27,21 @@ angular.module('app', []).controller('productController', function ($scope, $htt
             });
     }
 
+    $scope.saveProduct = function () {
+        $http.post(contextPath + '/products')
+            .then(function (response) {
+                $scope.loadProducts(currentPageIndex);
+            });
+    }
+
+    $scope.updateProduct = function (id) {
+        $http.put(contextPath + '/products/' + id)
+            .then(function (response) {
+                $scope.loadProducts(currentPageIndex);
+            });
+    }
+
+
     $scope.generatePagesIndexes = function(startPage, endPage) {
         let pages = [];
         for (let i = startPage; i < endPage + 1; i++) {

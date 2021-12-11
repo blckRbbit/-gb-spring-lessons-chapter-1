@@ -59,8 +59,19 @@
         </div>
         <nav class="row pages">
             <ul class="pagination">
-                <li class="page-item" ng-repeat="pageIndex in paginationArray">
-                    <a class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</a>
+                <li class="page-item" ng-show="pages.number > 0">
+                    <a class="page-link" ng-click="loadProducts(0)">To start</a>
+                </li>
+               <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                    <a class="page-link" ng-show="pages.number != pageIndex - 1"
+                       ng-click="loadProducts(pageIndex)">{{pageIndex}}
+                    </a>
+                    <a class="page-link" ng-show="pages.number == pageIndex - 1"
+                       style="font-weight: bold; color: #007BFF;" ng-click="loadProducts(pageIndex)">{{pageIndex}}
+                    </a>
+                </li>
+                <li class="page-item" ng-show="pages.number < pages.totalPages - 1">
+                    <a class="page-link" ng-click="loadProducts(pages.totalPages)">To end</a>
                 </li>
             </ul>
         </nav>
