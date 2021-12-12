@@ -22,18 +22,19 @@ angular.module('app').controller('adminController', function ($scope, $http, $ro
         });
     }
 
+    $scope.createProduct = function() {
+        $http.post(contextPath + '/products/', $scope.new_product)
+            .then(function successCallback (response) {
+                $scope.new_product = null;
+                alert('Success!');
+                $location.path('/store');
+            }, function failureCallback (response) {
+                alert(response.data.message);
+            });
+    }
+
     if($routeParams.productId != null) {
         $scope.prepareProductForUpdate();
     }
 
 });
-//    $scope.createProduct = function() {
-//        $http.post(contextPath + '/products/', $scope.new_product)
-//            .then(function successCallback (response) {
-//                $scope.new_product = null;
-//                alert('Success!');
-//                $location.path('/store');
-//            }, function failureCallback(response) {
-//                alert(response.data.message);
-//            }
-//    }
