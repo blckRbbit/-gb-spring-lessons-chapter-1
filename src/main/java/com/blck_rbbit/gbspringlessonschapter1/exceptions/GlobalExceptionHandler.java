@@ -12,4 +12,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), e.getMessage()),
                 HttpStatus.NOT_FOUND);
     }
+    
+    @ExceptionHandler
+    public ResponseEntity<AppError> catchDataValidationException(DataValidationException e) {
+        return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessages()),
+                HttpStatus.BAD_REQUEST);
+    }
 }

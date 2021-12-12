@@ -2,11 +2,17 @@ package com.blck_rbbit.gbspringlessonschapter1.controllers;
 
 import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDTO;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
+import com.blck_rbbit.gbspringlessonschapter1.exceptions.DataValidationException;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -33,21 +39,36 @@ public class ProductController {
     }
     
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public Product getById(@PathVariable Long id) {
         return productService.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found, id: " + id)
         );
     }
     
     @PostMapping
-    public Product saveNewProduct(@RequestBody ProductDTO productDTO) {
+    public ProductDTO save(@RequestBody @Validated ProductDTO productDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult.getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList()));
+        }
         productDTO.setId(null);
-        Product product = new Product(productDTO.getTitle(), productDTO.getCost());
-        return productService.save(product);
+        Product product = new Product();
+        product.setCost(productDTO.getCost());
+        product.setTitle(productDTO.getTitle());
+        productService.save(product);
+        return new ProductDTO(product);
     }
     
     @PutMapping
-    public void updateProduct(@RequestBody ProductDTO productDTO) {
+    public void update(@RequestBody @Validated ProductDTO productDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult.getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList()));
+        }
         productService.updateProductFromDTO(productDTO);
     }
     
