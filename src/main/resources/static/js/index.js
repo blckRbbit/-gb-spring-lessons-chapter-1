@@ -1,72 +1,40 @@
-angular.module('app', []).controller('productController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8187/app';
+(function() {
+    angular
+        .module('app', ['ngRoute'])
+        .config(config)
+        .run(run);
 
-    $scope.loadProducts = function () {
-        $http.get(contextPath + '/products')
-            .then(function (response) {
-                $scope.ProductsList = response.data;
+    function config($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'main/main.html',
+                controller: 'mainController'
+            })
+            .when('/store', {
+                templateUrl: 'store/store.html',
+                controller: 'storeController'
+            })
+            .when('/admin', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
+            })
+            .when('/admin/:productId', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
+            }).when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
+            })
+            .otherwise({
+                redirectTo: '/'
             });
-    };
-
-    $scope.findProductById = function(id) {
-        $http.get(contextPath + '/products/' + id)
-            .then(function (response) {
-                $scope.ProductsList = response.data;
-                console.log(response.data);
-            });
-        }
-
-    $scope.deleteProduct = function (id) {
-        $http.get(contextPath + '/products/delete/' + id)
-            .then(function (response) {
-                $scope.loadProducts();
-            });
     }
 
-    $scope.changeCost = function (id, delta) {
-        $http({
-            url: contextPath + '/products/change_cost',
-            method: 'POST',
-            params: {
-                id: id,
-                delta: delta
-            }
-        }).then(function (response) {
-            $scope.loadProducts();
-        }).catch(function (err) {
-        return errorService.handleError(error);});
-    }
+    function run($rootScope, $http) {
 
-    $scope.filteredProducts = function(min, max) {
-    $http({
-        url: contextPath + '/products/filter_by_cost',
-        method: 'GET',
-        params: {
-            min: min,
-            max: max
-        }
-    }).then(function (response) {
-        $scope.ProductsList = response.data;
-        });
     }
+})();
 
-    $scope.goToPreviousPage = function() {
-    $http({
-        url: contextPath + '/products/previous',
-        method: 'GET',
-    }).then(function (response) {
-        $scope.ProductsList = response.data;
-        });
-    }
-
-    $scope.goToNextPage = function() {
-    $http({
-        url: contextPath + '/products/next',
-        method: 'GET',
-    }).then(function (response) {
-        $scope.ProductsList = response.data;
-        });
-    }
-
-    $scope.loadProducts();
+angular.module('app').controller('indexController', function ($rootScope, $scope, $http) {
+    const contextPath = 'http://localhost:8187/app/api/v1';
 });

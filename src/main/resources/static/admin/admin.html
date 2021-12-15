@@ -1,0 +1,43 @@
+<div>
+    <div class="page-title row"><h3>Admin</h3></div>
+    <br>
+    <div class="row">
+        <div class="col col-lg-2" ng-show="updated_product.id != null">
+            <h6>Change product: </h6>
+            <form class="update-form" novalidate ng-submit="updateProduct()">
+                <input class="form-control" type="number" hidden placeholder="product id" ng-model="updated_product.id">
+                <br>
+                <input class="form-control" type="text" placeholder="product title" ng-model="updated_product.title">
+                <br>
+                <input class="form-control" type="number" placeholder="product cost" ng-model="updated_product.cost">
+                <br>
+                <button type="submit" class="search-btn btn btn-primary">save changes</button>
+            </form>
+        </div>
+
+        <div class="col col-lg-2">
+            <h6>Create product: </h6>
+            <br>
+            <form class="update-form" novalidate ng-submit="createProduct()">
+                <input class="form-control" type="text" placeholder="product title" ng-model="new_product.title">
+                <br>
+                <input class="form-control" type="number" placeholder="product cost" ng-model="new_product.cost">
+                <br>
+                <button type="submit" class="search-btn btn btn-primary">create</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="col col-lg-2">-->
+<!--    <h6>Create product: </h6>-->
+<!--    <br>-->
+<!--    <form class="update-form" novalidate ng-submit="createProduct()">-->
+<!--        <input class="form-control" type="text" placeholder="product title" ng-model="new_product.title">-->
+<!--        <br>-->
+<!--        <input class="form-control" type="number" placeholder="product cost" ng-model="new_product.cost">-->
+<!--        <br>-->
+<!--        <button type="submit" class="search-btn btn btn-primary">create</button>-->
+<!--    </form>-->
+<!--</div>-->
