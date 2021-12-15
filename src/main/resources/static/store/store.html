@@ -33,10 +33,14 @@
                         <td>{{product.cost}}</td>
                         <td>
                             <p>
+                                <button class="btn btn-secondary" ng-click="addProductToCart(product.id)">
+                                    add to cart
+                                </button>
                                 <button class="btn btn-secondary" ng-click="deleteProduct(product.id)">
                                     delete
                                 </button>
-                                <button type="button" class="btn btn-secondary" ng-click="navigateToAdminPageFromProductId(product.id)">
+                                <button type="button" class="btn btn-secondary"
+                                        ng-click="navigateToAdminPageFromProductId(product.id)">
                                     change
                                 </button>
                             </p>

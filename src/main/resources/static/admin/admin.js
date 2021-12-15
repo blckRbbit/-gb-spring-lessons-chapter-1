@@ -6,13 +6,13 @@ angular.module('app').controller('adminController', function ($scope, $http, $ro
             .then(function successCallback (response) {
                 $scope.updated_product = response.data;
         }, function failureCallback (response) {
-                alert(response.data.messages);
+                alert(response.data.errorFieldsMessages);
                 $location.path('/store');
         });
     }
 
     $scope.updateProduct = function () {
-        if ($scope.new_product == null) {
+        if ($scope.updated_product == null) {
             alert('All form fields must be filled');
             return;
         }
@@ -22,7 +22,7 @@ angular.module('app').controller('adminController', function ($scope, $http, $ro
                 alert('Success!');
                 $location.path('/store');
         }, function failureCallback (response) {
-                alert(response.data.messages);
+                alert(response.data.errorFieldsMessages);
         });
     }
 
@@ -37,7 +37,7 @@ angular.module('app').controller('adminController', function ($scope, $http, $ro
                 alert('Success!');
                 $location.path('/store');
             }, function failureCallback (response) {
-                alert(response.data.messages);
+                alert(response.data.errorFieldsMessages);
             });
     }
 

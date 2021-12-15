@@ -4,8 +4,8 @@ import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDTO;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.repositories.ProductRepository;
-import com.blck_rbbit.gbspringlessonschapter1.specifications.ProductSpecifications;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.blck_rbbit.gbspringlessonschapter1.repositories.specifications.ProductSpecifications;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,12 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
     
-    private ProductRepository productRepository;
-    
-    public ProductService() {
-    }
+    private final ProductRepository productRepository;
     
     public Page<Product> find(Integer minCost, Integer maxCost, Long id, String partTitle, Integer page) {
         Specification<Product> specification = Specification.where(null);
@@ -54,16 +52,10 @@ public class ProductService {
     }
     
     @Transactional
-    public void updateProductFromDTO(ProductDTO productDTO) {
+    public void update(ProductDTO productDTO) {
         Product product = findById(productDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product for update not found, id: " + productDTO.getId()));
         product.setTitle(productDTO.getTitle());
         product.setCost(productDTO.getCost());
     }
-    
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-    
 }

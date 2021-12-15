@@ -1,9 +1,7 @@
-package com.blck_rbbit.gbspringlessonschapter1.specifications;
+package com.blck_rbbit.gbspringlessonschapter1.repositories.specifications;
 
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.math.BigDecimal;
 
 public class ProductSpecifications {
     

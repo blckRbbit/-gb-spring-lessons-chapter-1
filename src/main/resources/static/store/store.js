@@ -51,5 +51,16 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
                 });
          }
 
+         $scope.addProductToCart = function (id) {
+            $http({
+                url: contextPath + '/cart',
+                method: 'POST',
+                data: JSON.stringify(id),
+            }).then(function (response) {
+                alert('Success!');
+                $location.path('/cart');
+            })
+         }
+
          $scope.loadProducts();
 });
