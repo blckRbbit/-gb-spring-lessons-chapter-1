@@ -2,26 +2,53 @@
     padding: 0;
     margin: 0;
 }
-
-.form-wrapper {
-    padding: 0;
-    margin: 0;
-}
-
-.filter-form {
+.page-title {
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    padding: 10px;
+}
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
 }
 
-.filter-form input {
-    margin-right: 10px;
+.form-wrapper form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.pagination {
+.col-products {
+    padding: 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.col-products table {
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.pages {
+    padding: 10px;
     display: flex;
     justify-content: center;
 }
 
-.pagination button {
-    margin: 10px;
+.page-item {
+    margin: 2px;
+}
+
+.registration {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
 }

@@ -1,72 +1,88 @@
-angular.module('app', []).controller('productController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8187/app';
+(function() {
+    angular
+        .module('app', ['ngRoute', 'ngStorage'])
+        .config(config)
+        .run(run);
 
-    $scope.loadProducts = function () {
-        $http.get(contextPath + '/products')
-            .then(function (response) {
-                $scope.ProductsList = response.data;
+    function config($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'main/main.html',
+                controller: 'mainController'
+            })
+            .when('/auth', {
+               templateUrl: '/',
+               controller: 'indexController'
+            })
+            .when('/registration', {
+                templateUrl: 'registration/registration.html',
+                controller: 'registrationController'
+            })
+            .when('/store', {
+                templateUrl: 'store/store.html',
+                controller: 'storeController'
+            })
+            .when('/admin', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
+            })
+            .when('/admin/:productId', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
+            }).when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
+            })
+            .otherwise({
+                redirectTo: '/'
             });
+    }
+
+    function run($rootScope, $http) {
+
+    }
+})();
+
+angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+    if ($localStorage.springWebUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+    }
+
+    $scope.tryToAuth = function () {
+       $http.post('http://localhost:8187/app/auth', $scope.user)
+           .then(function successCallback(response) {
+               if (response.data.token) {
+                 console.log('success' + $scope.user);
+                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                 $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+                 $scope.user.username = null;
+                 $scope.user.password = null;
+           }
+       }, function errorCallback(response) {
+            console.log($scope.user);
+          });
     };
 
-    $scope.findProductById = function(id) {
-        $http.get(contextPath + '/products/' + id)
-            .then(function (response) {
-                $scope.ProductsList = response.data;
-                console.log(response.data);
-            });
-        }
+    $scope.tryToLogout = function () {
+       $scope.clearUser();
+       if ($scope.user.username) {
+         $scope.user.username = null;
+       }
+       if ($scope.user.password) {
+         $scope.user.password = null;
+       }
+    };
 
-    $scope.deleteProduct = function (id) {
-        $http.get(contextPath + '/products/delete/' + id)
-            .then(function (response) {
-                $scope.loadProducts();
-            });
-    }
+   $scope.clearUser = function () {
+      delete $localStorage.springWebUser;
+      $http.defaults.headers.common.Authorization = '';
+   };
 
-    $scope.changeCost = function (id, delta) {
-        $http({
-            url: contextPath + '/products/change_cost',
-            method: 'POST',
-            params: {
-                id: id,
-                delta: delta
-            }
-        }).then(function (response) {
-            $scope.loadProducts();
-        }).catch(function (err) {
-        return errorService.handleError(error);});
-    }
-
-    $scope.filteredProducts = function(min, max) {
-    $http({
-        url: contextPath + '/products/filter_by_cost',
-        method: 'GET',
-        params: {
-            min: min,
-            max: max
-        }
-    }).then(function (response) {
-        $scope.ProductsList = response.data;
-        });
-    }
-
-    $scope.goToPreviousPage = function() {
-    $http({
-        url: contextPath + '/products/previous',
-        method: 'GET',
-    }).then(function (response) {
-        $scope.ProductsList = response.data;
-        });
-    }
-
-    $scope.goToNextPage = function() {
-    $http({
-        url: contextPath + '/products/next',
-        method: 'GET',
-    }).then(function (response) {
-        $scope.ProductsList = response.data;
-        });
-    }
-
-    $scope.loadProducts();
+   $rootScope.isUserLoggedIn = function () {
+       if ($localStorage.springWebUser) {
+         return true;
+       } else {
+         return false;
+       }
+   };
 });
