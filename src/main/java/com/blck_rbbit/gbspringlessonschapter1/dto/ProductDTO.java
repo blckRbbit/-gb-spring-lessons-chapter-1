@@ -14,10 +14,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class ProductDTO {
     private Long id;
-    @NotNull(message = "Enter product name")
-    @Length(min = 3, max = 255, message = "Product name must be between 3 and 255 characters long")
     private String title;
-    
-    @Min(value = 1, message = "The price of the goods must be at least 1 ruble")
     private Integer cost;
 }

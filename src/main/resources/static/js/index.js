@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('app', ['ngRoute'])
+        .module('app', ['ngRoute', 'ngStorage'])
         .config(config)
         .run(run);
 
@@ -9,6 +9,14 @@
             .when('/', {
                 templateUrl: 'main/main.html',
                 controller: 'mainController'
+            })
+            .when('/auth', {
+               templateUrl: '/',
+               controller: 'indexController'
+            })
+            .when('/registration', {
+                templateUrl: 'registration/registration.html',
+                controller: 'registrationController'
             })
             .when('/store', {
                 templateUrl: 'store/store.html',
@@ -35,6 +43,46 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($rootScope, $scope, $http) {
-    const contextPath = 'http://localhost:8187/app/api/v1';
+angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+    if ($localStorage.springWebUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+    }
+
+    $scope.tryToAuth = function () {
+       $http.post('http://localhost:8187/app/auth', $scope.user)
+           .then(function successCallback(response) {
+               if (response.data.token) {
+                 console.log('success' + $scope.user);
+                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                 $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+                 $scope.user.username = null;
+                 $scope.user.password = null;
+           }
+       }, function errorCallback(response) {
+            console.log($scope.user);
+          });
+    };
+
+    $scope.tryToLogout = function () {
+       $scope.clearUser();
+       if ($scope.user.username) {
+         $scope.user.username = null;
+       }
+       if ($scope.user.password) {
+         $scope.user.password = null;
+       }
+    };
+
+   $scope.clearUser = function () {
+      delete $localStorage.springWebUser;
+      $http.defaults.headers.common.Authorization = '';
+   };
+
+   $rootScope.isUserLoggedIn = function () {
+       if ($localStorage.springWebUser) {
+         return true;
+       } else {
+         return false;
+       }
+   };
 });
