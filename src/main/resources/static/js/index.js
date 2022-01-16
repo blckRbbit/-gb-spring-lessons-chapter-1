@@ -46,7 +46,7 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage, $location) {
     if ($localStorage.springWebUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
     }
@@ -73,11 +73,13 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
        if ($scope.user.password) {
          $scope.user.password = null;
        }
+       $location.path('/');
     };
 
    $scope.clearUser = function () {
       delete $localStorage.springWebUser;
       $http.defaults.headers.common.Authorization = '';
+
    };
 
    $rootScope.isUserLoggedIn = function () {
