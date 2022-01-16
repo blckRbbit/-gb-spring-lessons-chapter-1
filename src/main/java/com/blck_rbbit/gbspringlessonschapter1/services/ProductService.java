@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.services;
 
-import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDTO;
+import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.repositories.ProductRepository;
@@ -52,7 +52,7 @@ public class ProductService {
     }
     
     @Transactional
-    public void update(ProductDTO productDTO) {
+    public void update(ProductDto productDTO) {
         Product product = findById(productDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product for update not found, id: " + productDTO.getId()));
         product.setTitle(productDTO.getTitle());

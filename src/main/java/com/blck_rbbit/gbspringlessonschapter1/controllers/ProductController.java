@@ -1,7 +1,7 @@
 package com.blck_rbbit.gbspringlessonschapter1.controllers;
 
 import com.blck_rbbit.gbspringlessonschapter1.converters.ProductConverter;
-import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDTO;
+import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.services.ProductService;
@@ -20,7 +20,7 @@ public class ProductController {
     private final ProductValidator productValidator;
     
     @GetMapping
-    public Page<ProductDTO> getProducts(
+    public Page<ProductDto> getProducts(
             @RequestParam(name = "min_cost", required = false) Integer minCost,
             @RequestParam(name = "max_cost", required = false) Integer maxCost,
             @RequestParam(name = "id", required = false) Long id,
@@ -35,14 +35,14 @@ public class ProductController {
     }
     
     @GetMapping("/{id}")
-    public ProductDTO getById(@PathVariable Long id) {
+    public ProductDto getById(@PathVariable Long id) {
         Product product = productService.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found, id: " + id));
         return productConverter.entityToDTO(product);
     }
     
     @PostMapping
-    public ProductDTO save(@RequestBody ProductDTO productDTO) {
+    public ProductDto save(@RequestBody ProductDto productDTO) {
         productValidator.validate(productDTO);
         Product product = productConverter.dtoToEntity(productDTO);
         product = productService.save(product);
@@ -50,7 +50,7 @@ public class ProductController {
     }
     
     @PutMapping
-    public void update(@RequestBody ProductDTO productDTO) {
+    public void update(@RequestBody ProductDto productDTO) {
         productValidator.validate(productDTO);
         productService.update(productDTO);
     }

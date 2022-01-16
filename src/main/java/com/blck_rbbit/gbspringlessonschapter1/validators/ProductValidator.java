@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.validators;
 
-import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDTO;
+import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ProductDataValidationException;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public class ProductValidator {
-    public void validate(ProductDTO productDTO) {
+    public void validate(ProductDto productDTO) {
         List<String> errors = new ArrayList<>();
         if (productDTO.getCost() < 1) {
             errors.add("The price of a product cannot be less than 1 ruble");

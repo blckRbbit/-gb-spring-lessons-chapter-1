@@ -32,6 +32,9 @@
             }).when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
+            }).when('/orders', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
             })
             .otherwise({
                 redirectTo: '/'
@@ -52,7 +55,6 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
        $http.post('http://localhost:8187/app/auth', $scope.user)
            .then(function successCallback(response) {
                if (response.data.token) {
-                 console.log('success' + $scope.user);
                  $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                  $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
                  $scope.user.username = null;
@@ -85,4 +87,5 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
          return false;
        }
    };
+
 });

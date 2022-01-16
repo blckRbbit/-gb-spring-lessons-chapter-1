@@ -3,25 +3,36 @@ package com.blck_rbbit.gbspringlessonschapter1.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "title", nullable = false)
     private String title;
     @Column(name = "cost", nullable = false)
     private Integer cost;
     
-    public Product(String title, Integer cost) {
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+    
+    public Product(Long id, String title, Integer cost) {
+        this.id = id;
         this.title = title;
         this.cost = cost;
     }

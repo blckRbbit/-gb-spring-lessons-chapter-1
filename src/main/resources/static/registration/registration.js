@@ -6,16 +6,15 @@ angular.module('app').controller('registrationController', function ($scope, $ht
             return;
         }
         console.log($scope.user);
-        $http.post('http://localhost:8187/registration', $scope.user)
+        $http.post('http://localhost:8187/app/registration', $scope.user)
             .then(function successCallback (response) {
                 $scope.user = null;
                 alert('Success!');
                 $location.path('/store');
             }, function failureCallback (response) {
-                alert(response);
+                alert(response.data.errorFieldsMessages)
             });
     }
-
 });
 
 

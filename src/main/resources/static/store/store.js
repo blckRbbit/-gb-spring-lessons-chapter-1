@@ -53,14 +53,20 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
 
          $scope.addProductToCart = function (id) {
             $http({
-                url: contextPath + '/cart',
-                method: 'POST',
-                data: JSON.stringify(id),
+                url: contextPath + '/cart/add/' + id,
+                method: 'GET',
             }).then(function (response) {
-                alert('Success!');
-                $location.path('/cart');
+                $scope.loadCart();
             })
          }
 
+         $scope.loadCart = function () {
+            $http.get(contextPath + '/cart')
+                .then(function(response) {
+                    $scope.cart = response.data;
+                })
+         }
+
          $scope.loadProducts();
+         $scope.loadCart();
 });
