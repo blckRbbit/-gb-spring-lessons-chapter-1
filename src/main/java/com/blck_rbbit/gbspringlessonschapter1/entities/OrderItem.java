@@ -8,20 +8,32 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
-@Table(name = "products")
+@Table(name = "order_items")
 @Data
 @NoArgsConstructor
-public class Product {
+@AllArgsConstructor
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "cost", nullable = false)
-    private Integer cost;
+    @Column(name = "quantity")
+    private Integer quantity;
+    @Column(name = "price_per_product")
+    private Integer pricePerProduct;
+    @Column(name = "price")
+    private Integer price;
+    
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
     
     @CreationTimestamp
     @Column(name = "created_at")
@@ -30,18 +42,4 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    
-    public Product(Long id, String title, Integer cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-    }
-    
-    @Override
-    public String toString() {
-        return String.format(
-                "Product {id: %s, title: %s, cost: %s%n}", id, title, cost
-        );
-    }
-    
 }

@@ -1,0 +1,93 @@
+<div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Ordering</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  novalidate ng-submit="createOrder()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter address" ng-model="orderDetails.address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="Enter phone" ng-model="orderDetails.phone" required>
+                            <small class="form-text text-muted">We'll never share your phone with anyone else.</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-title row"><h3>Cart</h3></div>
+    <div class="row">
+        <div class="col cart-products">
+            <div class="row">
+                <div class="col"><strong>Products quantity: {{totalItems}}</strong></div>
+                <div class="col"><strong>Total cost: {{items.totalPrice}}</strong></div>
+                <div class="col"><button class="btn btn-primary" ng-click="clearCart()">clear cart</button></div>
+            </div>
+            <br>
+            <div class="row">
+                <table class="table table-hover" cellpadding="0" cellspacing="0">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>№</th>
+                        <th>title</th>
+                        <th>cost</th>
+                        <th>quantity</th>
+                        <th>action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in items.items">
+                        <td>{{$index + 1}}</td>
+                        <td>{{item.productTitle}}</td>
+                        <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>
+                            <p>
+                                <button class="btn btn-secondary" ng-click="deleteProduct(product.id)">
+                                    delete
+                                </button>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row page-title">
+        <button  data-toggle="modal" data-target="#modal" class="btn btn-success" ng-click="createOrderItem()">
+            checkout
+        </button>
+    </div>
+    <br>
+    <div class="page-title row"><h3>My orders</h3></div>
+    <br>
+    <div class="row">
+        <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <thead class="thead-dark">
+            <tr>
+                <th>id</th>
+                <th>address</th>
+                <th>total price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in myOrders">
+                <td>{{order.id}}</td>
+                <td>{{order.address}}</td>
+                <td>{{order.totalPrice}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

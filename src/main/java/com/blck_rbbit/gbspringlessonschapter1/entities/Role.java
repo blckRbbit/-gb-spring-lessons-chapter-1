@@ -1,6 +1,5 @@
 package com.blck_rbbit.gbspringlessonschapter1.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,38 +9,28 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "products")
 @Data
+@Table(name = "roles")
 @NoArgsConstructor
-public class Product {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "cost", nullable = false)
-    private Integer cost;
-    
+
+    @Column(name = "name")
+    private String name;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    public Product(Long id, String title, Integer cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-    }
-    
-    @Override
-    public String toString() {
-        return String.format(
-                "Product {id: %s, title: %s, cost: %s%n}", id, title, cost
-        );
+    public Role(String name) {
+        this.name = name;
     }
     
 }
