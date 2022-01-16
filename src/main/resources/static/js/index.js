@@ -46,7 +46,7 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage, $location) {
+angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage, $location, $window) {
     if ($localStorage.springWebUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
     }
@@ -59,6 +59,7 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
                  $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
                  $scope.user.username = null;
                  $scope.user.password = null;
+                 $window.location.reload();
            }
        }, function errorCallback(response) {
             console.log($scope.user);
@@ -67,12 +68,13 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
 
     $scope.tryToLogout = function () {
        $scope.clearUser();
-       if ($scope.user.username) {
-         $scope.user.username = null;
-       }
-       if ($scope.user.password) {
-         $scope.user.password = null;
-       }
+       $scope.user = null;
+//       if ($scope.user.username) {
+//         $scope.user.username = null;
+//       }
+//       if ($scope.user.password) {
+//         $scope.user.password = null;
+//       }
        $location.path('/');
     };
 
