@@ -1,9 +1,11 @@
 package com.blck_rbbit.gbspringlessonschapter1.services;
 
 import com.blck_rbbit.gbspringlessonschapter1.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.entities.Category;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.repositories.ProductRepository;
+import com.blck_rbbit.gbspringlessonschapter1.repositories.specifications.CategorySpecifications;
 import com.blck_rbbit.gbspringlessonschapter1.repositories.specifications.ProductSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,8 +23,11 @@ public class ProductService {
     
     private final ProductRepository productRepository;
     
-    public Page<Product> find(Integer minCost, Integer maxCost, Long id, String partTitle, Integer page) {
+    public Page<Product> find(Integer minCost, Integer maxCost,
+                              Long id, String partTitle,
+                              Integer page) {
         Specification<Product> specification = Specification.where(null);
+        
         if (minCost != null) {
             specification = specification.and(ProductSpecifications.costGreaterOrEqualsThan(minCost));
         }
@@ -37,6 +42,14 @@ public class ProductService {
         }
         return productRepository.findAll(specification, PageRequest.of(page - 1, 5, Sort.by("id")));
     }
+    
+//    public Page<Product> find(String categoryTitlePart, Integer page) {
+//        Specification<Category> specification = Specification.where(null);
+//        if (categoryTitlePart != null) {
+//            specification = specification.and(CategorySpecifications.categoryTitleLike(categoryTitlePart));
+//        }
+//        return productRepository.findAll(specification, PageRequest.of(page - 1, 5, Sort.by("id")));
+//    }
     
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);

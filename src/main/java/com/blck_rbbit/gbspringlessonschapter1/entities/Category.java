@@ -1,7 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,25 +8,23 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "categories")
 @Data
 @NoArgsConstructor
-public class Product {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "cost", nullable = false)
-    private Integer cost;
     
-    @ManyToOne
-    @JsonBackReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Category category;
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
+    private List<Product> products;
     
     @CreationTimestamp
     @Column(name = "created_at")
@@ -37,17 +34,15 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    public Product(Long id, String title, Integer cost) {
+    public Category(Long id, String title) {
         this.id = id;
         this.title = title;
-        this.cost = cost;
     }
     
     @Override
     public String toString() {
         return String.format(
-                "Product {id: %s, title: %s, cost: %s%n}", id, title, cost
+                "Category {id: %s, title: %s%n}", id, title
         );
     }
-    
 }

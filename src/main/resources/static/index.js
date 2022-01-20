@@ -33,24 +33,40 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             }).when('/orders', {
-                templateUrl: 'cart/cart.html',
-                controller: 'cartController'
+                templateUrl: 'orders/orders.html',
+                controller: 'ordersController'
             })
             .otherwise({
                 redirectTo: '/'
             });
     }
 
-    function run($rootScope, $http) {
-
+    function run($rootScope, $http, $localStorage) {
+         if ($localStorage.springWebUser) {
+            try {
+                let jwt = $localStorage.springWebUser.token;
+                let payload = JSON.parse(atob(jwt.split('.')[1]));
+                let currentTime = parseInt(new Date().getTime() / 1000);
+                if (currentTime > payload.exp) {
+                    console.log("Token is expired!!!");
+                    delete $localStorage.springWebUser;
+                    $http.defaults.headers.common.Authorization = '';
+                    }
+            } catch (e) {}
+         }
+        if ($localStorage.springWebUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+        }
+        if (!$localStorage.springWebGuestCartId) {
+            $http.get('http://localhost:8187/app/api/v1/cart/generate')
+                .then(function successCallback(response) {
+                    $localStorage.springWebGuestCartId = response.data.value;
+                });
+        }
     }
 })();
 
 angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage, $location, $window) {
-    if ($localStorage.springWebUser) {
-        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
-    }
-
     $scope.tryToAuth = function () {
        $http.post('http://localhost:8187/app/auth', $scope.user)
            .then(function successCallback(response) {
@@ -59,6 +75,9 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
                  $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
                  $scope.user.username = null;
                  $scope.user.password = null;
+                 $http.get('http://localhost:8187/app/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
+                    .then(function successCallback(response) {
+                    });
                  $window.location.reload();
            }
        }, function errorCallback(response) {
@@ -69,12 +88,6 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
     $scope.tryToLogout = function () {
        $scope.clearUser();
        $scope.user = null;
-//       if ($scope.user.username) {
-//         $scope.user.username = null;
-//       }
-//       if ($scope.user.password) {
-//         $scope.user.password = null;
-//       }
        $location.path('/');
     };
 

@@ -1,4 +1,4 @@
-angular.module('app').controller('storeController', function ($scope, $http, $location) {
+angular.module('app').controller('storeController', function ($scope, $http, $location, $localStorage) {
          const contextPath = 'http://localhost:8187/app/api/v1';
          let currentPageIndex = 1;
 
@@ -12,6 +12,7 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
                      max_cost: $scope.filter ? $scope.filter.max_cost : null,
                      id: $scope.filter ? $scope.filter.id : null,
                      title: $scope.filter ? $scope.filter.title : null,
+                     category: $scope.filter ? $scope.filter.category : null,
                      page: pageIndex
                  }
              }).then(function(response) {
@@ -51,22 +52,11 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
                 });
          }
 
-         $scope.addProductToCart = function (id) {
-            $http({
-                url: contextPath + '/cart/add/' + id,
-                method: 'GET',
-            }).then(function (response) {
-                $scope.loadCart();
-            })
-         }
-
-         $scope.loadCart = function () {
-            $http.get(contextPath + '/cart')
-                .then(function(response) {
-                    $scope.cart = response.data;
-                })
-         }
+         $scope.addProductToCart = function (productId) {
+                 $http.get(contextPath + '/cart/' + $localStorage.springWebGuestCartId + '/add/' + productId)
+                     .then(function (response) {
+                     });
+             }
 
          $scope.loadProducts();
-         $scope.loadCart();
 });

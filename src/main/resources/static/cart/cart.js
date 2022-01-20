@@ -1,8 +1,8 @@
-angular.module('app').controller('cartController', function ($scope, $http, $location, $window) {
-    const contextPath = 'http://localhost:8187/app/api/v1';
+angular.module('app').controller('cartController', function ($scope, $http, $location, $window, $localStorage) {
+    const contextPath = 'http://localhost:8187/app/';
 
          $scope.loadCartProducts = function () {
-             $http.get(contextPath + '/cart')
+             $http.get(contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId)
                 .then(function(response) {
                      var temp = 0;
                      $scope.items = response.data;
@@ -19,7 +19,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
          }
 
          $scope.clearCart = function() {
-            $http.get(contextPath + '/cart/clear')
+            $http.get(contextPath + 'cart/' + $localStorage.springWebGuestCartId + '/clear')
                 .then(function (response) {
                     $scope.loadCartProducts();
                     $location.path('/store');
@@ -32,23 +32,14 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
                 return;
             }
             $http({
-                url: contextPath + '/orders',
+                url: contextPath + 'api/v1/orders',
                 method: 'POST',
                 data: $scope.orderDetails
             }).then(function(response) {
-                $scope.loadOrders();
                 $scope.clearCart();
                 $scope.orderDetails = null;
                 $window.location.reload();
             });
          };
-
-         $scope.loadOrders = function() {
-            $http.get(contextPath + '/orders')
-                .then(function(response) {
-                    $scope.myOrders = response.data;
-                });
-         }
          $scope.loadCartProducts();
-         $scope.loadOrders();
 });

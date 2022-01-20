@@ -7,6 +7,8 @@
                 <form class="filter-form" novalidate ng-submit="loadProducts()">
                     <input class="form-control" type="text" placeholder="product title" ng-model="filter.title">
                     <br>
+                    <input class="form-control" type="text" placeholder="category" ng-model="filter.category">
+                    <br>
                     <input class="form-control" type="number" placeholder="product id" min="0" max="100000000" ng-model="filter.id">
                     <br>
                     <input class="form-control" type="number" placeholder="min cost" min="0" max="10000" ng-model="filter.min_cost">

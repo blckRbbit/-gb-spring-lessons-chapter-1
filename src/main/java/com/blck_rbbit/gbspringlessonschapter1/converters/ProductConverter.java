@@ -11,6 +11,6 @@ public class ProductConverter {
     }
     
     public ProductDto entityToDTO(Product product) {
-        return new ProductDto(product.getId(), product.getTitle(), product.getCost());
+        return new ProductDto(product.getId(), product.getTitle(), product.getCost(), product.getCategory());
     }
 }

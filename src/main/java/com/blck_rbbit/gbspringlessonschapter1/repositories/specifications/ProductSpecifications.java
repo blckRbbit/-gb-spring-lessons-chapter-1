@@ -1,6 +1,8 @@
 package com.blck_rbbit.gbspringlessonschapter1.repositories.specifications;
 
+import com.blck_rbbit.gbspringlessonschapter1.entities.Category;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
+import jdk.dynalink.linker.GuardedInvocationTransformer;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ProductSpecifications {

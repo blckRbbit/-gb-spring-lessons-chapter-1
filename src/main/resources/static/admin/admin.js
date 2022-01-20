@@ -33,6 +33,7 @@ angular.module('app').controller('adminController', function ($scope, $http, $ro
         }
         $http.post(contextPath + '/products/', $scope.new_product)
             .then(function successCallback (response) {
+            console.log($scope.new_product);
                 $scope.new_product = null;
                 alert('Success!');
                 $location.path('/store');

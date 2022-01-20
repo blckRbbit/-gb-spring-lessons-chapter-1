@@ -5,7 +5,7 @@ import com.blck_rbbit.gbspringlessonschapter1.entities.Order;
 import com.blck_rbbit.gbspringlessonschapter1.entities.OrderItem;
 import com.blck_rbbit.gbspringlessonschapter1.entities.User;
 import com.blck_rbbit.gbspringlessonschapter1.exceptions.ResourceNotFoundException;
-import com.blck_rbbit.gbspringlessonschapter1.persistens.Cart;
+import com.blck_rbbit.gbspringlessonschapter1.dto.Cart;
 import com.blck_rbbit.gbspringlessonschapter1.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,8 @@ public class OrderService {
     
     @Transactional
     public void createOrder(User user, OrderDetailsDto orderDetailsDto) {
-        Cart currentCart = cartService.getCurrentCart();
+        String cartKey = cartService.getCartUuidFromSuffix(user.getUsername());
+        Cart currentCart = cartService.getCurrentCart(cartKey);
         Order order = new Order();
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());
@@ -42,7 +43,7 @@ public class OrderService {
                 }).collect(Collectors.toList());
         order.setItems(items);
         orderRepository.save(order);
-        currentCart.clear();
+        cartService.clearCart(cartKey);
     }
     
     public List<Order> findOrdersByUserName(String userName) {
