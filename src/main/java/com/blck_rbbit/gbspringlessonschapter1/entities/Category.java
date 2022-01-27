@@ -34,11 +34,6 @@ public class Category {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    public Category(Long id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-    
     @Override
     public String toString() {
         return String.format(

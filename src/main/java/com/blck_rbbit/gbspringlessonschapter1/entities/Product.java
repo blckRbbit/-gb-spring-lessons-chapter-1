@@ -1,5 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.entities;
 
+import com.blck_rbbit.gbspringlessonschapter1.soap.products.ProductSoap;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Product {
     @ManyToOne
     @JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinColumn(name = "category_id")
     private Category category;
     
     @CreationTimestamp

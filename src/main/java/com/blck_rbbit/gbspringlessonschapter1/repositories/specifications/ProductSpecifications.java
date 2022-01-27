@@ -1,8 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.repositories.specifications;
 
-import com.blck_rbbit.gbspringlessonschapter1.entities.Category;
 import com.blck_rbbit.gbspringlessonschapter1.entities.Product;
-import jdk.dynalink.linker.GuardedInvocationTransformer;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ProductSpecifications {
@@ -25,5 +23,10 @@ public class ProductSpecifications {
     public static Specification<Product> genreIs(Long id) {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder
                 .equal(root.get("id"), id);
+    }
+    
+    public static Specification<Product> categoryTitleIs(String categoryTitle) {
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder
+                .equal(root.get("category").get("title"), categoryTitle);
     }
 }
