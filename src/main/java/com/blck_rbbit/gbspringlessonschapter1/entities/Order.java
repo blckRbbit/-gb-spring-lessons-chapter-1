@@ -1,8 +1,8 @@
 package com.blck_rbbit.gbspringlessonschapter1.entities;
 
-import com.blck_rbbit.gbspringlessonschapter1.soap.products.ProductSoap;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,26 +10,32 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
-public class Product {
+@AllArgsConstructor
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "cost", nullable = false)
-    private Integer cost;
+    @Column(name = "total_price")
+    private Integer totalPrice;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "phone")
+    private String phone;
     
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference // Таким образом я предотвратил рекурсию
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JoinColumn(name = "category_id")
-    private Category category;
+    private User user;
+    
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<OrderItem> items;
     
     @CreationTimestamp
     @Column(name = "created_at")
@@ -39,17 +45,10 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    public Product(Long id, String title, Integer cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-    }
-    
-    @Override
-    public String toString() {
-        return String.format(
-                "Product {id: %s, title: %s, cost: %s%n}", id, title, cost
-        );
+    public Order(Integer totalPrice, String address, String phone) {
+        this.totalPrice = totalPrice;
+        this.address = address;
+        this.phone = phone;
     }
     
 }
