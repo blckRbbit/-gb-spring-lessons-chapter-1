@@ -1,6 +1,7 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.converters;
 
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.CategoryDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.Product;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,8 @@ public class ProductConverter {
     }
     
     public ProductDto entityToDTO(Product product) {
-        return new ProductDto(product.getId(), product.getTitle(), product.getCost(), product.getCategory());
+        CategoryDto categoryDto = new CategoryDto(product.getId(), product.getCategory().getTitle());
+        return new ProductDto(product.getId(), product.getTitle(), product.getCost(), categoryDto);
     }
     
 }

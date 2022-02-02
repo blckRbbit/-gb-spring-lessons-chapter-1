@@ -1,5 +1,8 @@
-package com.blck_rbbit.gbspringlessonschapter1.core.dto;
-import com.blck_rbbit.gbspringlessonschapter1.core.entities.Product;
+package com.blck_rbbit.gbspringlessonschapter1.cartapp.persist;
+
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.OrderItemDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -7,22 +10,23 @@ import java.util.Iterator;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class Cart {
     private List<OrderItemDto> items;
     private int totalPrice;
-    
+
     public Cart() {
         this.items = new ArrayList<>();
     }
     
-    public void add(Product product) {
-        if (add(product.getId())) {
+    public void add(ProductDto productDto) {
+        if (add(productDto.getId())) {
             return;
         }
-        items.add(new OrderItemDto(product));
+        items.add(new OrderItemDto(productDto));
         recalculate();
     }
-    
+
     public boolean add(Long id) {
         for (OrderItemDto o : items) {
             if (o.getProductId().equals(id)) {
@@ -33,7 +37,7 @@ public class Cart {
         }
         return false;
     }
-    
+
     public void decrement(Long productId) {
         Iterator<OrderItemDto> iter = items.iterator();
         while (iter.hasNext()) {
@@ -48,24 +52,12 @@ public class Cart {
             }
         }
     }
-    
+
     public void remove(Long productId) {
         items.removeIf(o -> o.getProductId().equals(productId));
         recalculate();
     }
-    
-    public void clear() {
-        items.clear();
-        totalPrice = 0;
-    }
-    
-    private void recalculate() {
-        totalPrice = 0;
-        for (OrderItemDto o : items) {
-            totalPrice += o.getPrice();
-        }
-    }
-    
+
     public void merge(Cart another) {
         for (OrderItemDto anotherItem : another.items) {
             boolean merged = false;
@@ -82,5 +74,17 @@ public class Cart {
         }
         recalculate();
         another.clear();
+    }
+    
+    private void recalculate() {
+        totalPrice = 0;
+        for (OrderItemDto o : items) {
+            totalPrice += o.getPrice();
+        }
+    }
+    
+    public void clear() {
+        items.clear();
+        totalPrice = 0;
     }
 }

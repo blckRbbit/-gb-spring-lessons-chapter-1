@@ -1,6 +1,6 @@
 angular.module('app').controller('storeController', function ($scope, $http, $location, $localStorage) {
-//'http://localhost:8702/app/core/api/v1'
          const contextPath = 'http://localhost:8701/core/api/v1';
+         const cartPath = 'http://localhost:8701/cart/api/v1'
          let currentPageIndex = 1;
 
          $scope.loadProducts = function (pageIndex = 1) {
@@ -54,7 +54,7 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
          }
 
          $scope.addProductToCart = function (productId) {
-                 $http.get(contextPath + '/cart/' + $localStorage.springWebGuestCartId + '/add/' + productId)
+                 $http.get(cartPath + '/cart/' + $localStorage.springWebGuestCartId + '/add/' + productId)
                      .then(function (response) {
                      });
              }

@@ -1,4 +1,4 @@
-package com.blck_rbbit.gbspringlessonschapter1.configs;
+package com.blck_rbbit.gbspringlessonschapter1.cartapp.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

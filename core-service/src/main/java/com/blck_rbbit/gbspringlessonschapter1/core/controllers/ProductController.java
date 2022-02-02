@@ -1,8 +1,8 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.controllers;
 
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.core.converters.ProductConverter;
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.core.services.ProductService;
 import com.blck_rbbit.gbspringlessonschapter1.core.validators.ProductValidator;

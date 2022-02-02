@@ -1,5 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.dto;
 
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.OrderItemDto;
 import lombok.Data;
 
 import java.util.List;

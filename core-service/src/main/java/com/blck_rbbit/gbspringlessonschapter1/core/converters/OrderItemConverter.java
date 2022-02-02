@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.converters;
 
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.OrderItemDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.OrderItemDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.OrderItem;
 import org.springframework.stereotype.Component;
 

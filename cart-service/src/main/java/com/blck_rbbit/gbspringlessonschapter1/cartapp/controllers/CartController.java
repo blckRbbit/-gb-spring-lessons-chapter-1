@@ -1,10 +1,12 @@
-package com.blck_rbbit.gbspringlessonschapter1.core.controllers;
+package com.blck_rbbit.gbspringlessonschapter1.cartapp.controllers;
 
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.CartDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.dto.StringResponse;
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.Cart;
-import com.blck_rbbit.gbspringlessonschapter1.core.services.CartService;
+import com.blck_rbbit.gbspringlessonschapter1.cartapp.converters.CartConverter;
+import com.blck_rbbit.gbspringlessonschapter1.cartapp.services.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 public class CartController {
-    
     private final CartService cartService;
+    private final CartConverter cartConverter;
     
     @GetMapping("/{uuid}")
-    public Cart getCart(@RequestHeader(required = false) String username, @PathVariable String uuid) {
-        return cartService.getCurrentCart(getCurrentCartUuid(username, uuid));
+    public CartDto getCart(@RequestHeader (required = false) String username, @PathVariable String uuid) {
+        return cartConverter.entityToDTO(cartService.getCurrentCart(getCurrentCartUuid(username, uuid)));
     }
     
     @GetMapping("/generate")

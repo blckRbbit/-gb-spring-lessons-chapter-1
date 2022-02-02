@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.validators;
 
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.exceptions.ProductDataValidationException;
 import org.springframework.stereotype.Component;
 
