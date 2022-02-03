@@ -4,6 +4,7 @@ import com.blck_rbbit.gbspringlessonschapter1.api.dto.OrderItemDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@Component
 public class Cart {
     private List<OrderItemDto> items;
     private int totalPrice;
@@ -54,6 +56,7 @@ public class Cart {
     }
 
     public void remove(Long productId) {
+        //todo после удаления элемента обнуляется общая цена в корзине
         items.removeIf(o -> o.getProductId().equals(productId));
         recalculate();
     }

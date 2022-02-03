@@ -4,10 +4,10 @@ import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.cartapp.persist.Cart;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

@@ -12,6 +12,15 @@
     <artifactId>cart-service</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.blck_rbbit</groupId>
             <artifactId>api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
@@ -23,5 +32,4 @@
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
     </properties>
-
 </project>
