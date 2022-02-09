@@ -7,4 +7,7 @@ utils:
     prefix: SPRING_WEB_
 spring:
   redis:
-    timeout: 3000
+    timeout: 30000
+integrations:
+  core-service:
+    url: http://localhost:8701/core

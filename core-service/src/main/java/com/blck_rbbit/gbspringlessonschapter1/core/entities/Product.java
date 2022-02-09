@@ -27,6 +27,9 @@ public class Product {
     @Column(name = "cost", nullable = false)
     private Integer cost;
     
+    @Column(name = "quantity_added_to_cart", nullable = false)
+    private Long quantityAddedToCart;
+    
     @ManyToOne
     @JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

@@ -14,12 +14,59 @@ button {
 .nav-item button {
     margin-top: 0px;
 }
-
 .page-title {
     display: flex;
     justify-content: center;
-    padding: 10px;
 }
+
+.offer {
+    color: red;
+}
+
+.offer_top-month {
+    font-weight: 700;
+    padding-left: 30px;
+}
+
+#blink {
+	-webkit-animation: blink 2s linear infinite;
+	animation: blink 2s linear infinite;
+	font-weight: bold;
+	color: color: #F00;
+}
+
+@-webkit-keyframes blink {
+	0% { color: #F00; }
+	50% { color: #FBB; }
+	100% { color: #F00; }
+}
+
+@keyframes blink {
+	0% { color: #F00; }
+	50% { color: #FBB; }
+	100% { color: #F00; }
+}
+
+
+.marquee {
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+   }
+   @keyframes marquee {
+    from { text-indent: 100%; }
+    to { text-indent: -110%; }
+   }
+
+.ticket {
+    width: 82vw;
+    padding: 5px;
+    margin-bottom: 5px;
+    background: #fadb6d;
+    border-radius: 5px;
+}
+
 .form-wrapper {
     display: flex;
     flex-direction: column;

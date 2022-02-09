@@ -1,10 +1,11 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.converters;
 
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.OrderDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.OrderDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,6 +25,7 @@ public class OrderConverter {
         out.setTotalPrice(order.getTotalPrice());
         out.setUserName(order.getUsername());
         out.setItems(order.getItems().stream().map(orderItemConverter::entityToDto).collect(Collectors.toList()));
+        out.setCreatedAt(LocalDateTime.now());
         return out;
     }
 }

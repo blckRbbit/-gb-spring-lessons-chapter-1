@@ -1,57 +1,52 @@
 package com.blck_rbbit.gbspringlessonschapter1.cartmstests;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.CategoryDto;
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
-import com.blck_rbbit.gbspringlessonschapter1.cartapp.persist.Cart;
-import org.junit.jupiter.api.Test;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.CategoryDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.cartapp.models.Cart;
 import org.junit.jupiter.api.Assertions;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class CartTest {
-    @Autowired
-    private Cart cart;
-    
+    private final Cart TESTED_CART = new Cart();
     private final Integer TEST_COST_FOR_PRODUCT = (int) (Math.random() * (2001 - 57 + 1) + 57);
-    private final Long TEST_PRODUCT_ID = (long) (Math.random() * (101 - 1 + 1) +1);
+    private final Long TEST_PRODUCT_ID = (long) (Math.random() * 100 +1);
     
     @Test
     public void cartFillingTest() {
-        cartFillingWithDifferentProducts();
-        Assertions.assertEquals(6, cart.getItems().size());
+        Cart cart = cartFillingWithDifferentProducts(TESTED_CART);
+        Assertions.assertEquals(5, cart.getItems().size());
     }
     
     @Test
     public void cartFillingWithTheSameProductTest() {
-        cartFillingWithTheSameProduct(TEST_PRODUCT_ID);
+        Cart cart = cartFillingWithTheSameProduct(TEST_PRODUCT_ID, TESTED_CART);
         Assertions.assertEquals(1, cart.getItems().size());
         Assertions.assertEquals(5, cart.getItems().get(0).getQuantity());
         Assertions.assertEquals(cart.getTotalPrice(), (cart.getItems().get(0).getPricePerProduct()) * 5);
     }
-    
+
     @Test
     public void cartDecrementIsValidTest() {
-        cartFillingWithTheSameProduct(TEST_PRODUCT_ID);
+        Cart cart = cartFillingWithTheSameProduct(TEST_PRODUCT_ID, TESTED_CART);
         int totalPrice = cart.getTotalPrice();
         cart.decrement(TEST_PRODUCT_ID);
         Assertions.assertEquals(totalPrice - TEST_COST_FOR_PRODUCT, cart.getTotalPrice());
     }
-    
+
     @Test
     public void removeProductFromCartIsValidTest() {
-        cartFillingWithTheSameProduct(TEST_PRODUCT_ID);
+        Cart cart = cartFillingWithDifferentProducts(TESTED_CART);
+        ProductDto product = new ProductDto(1L, "Product № 1", 100, new CategoryDto(2L, "Category № 2"));
+        cart.add(product);
         int cartSizeBeforeRemoving = cart.getItems().size();
         int totalPriceBeforeRemoving = cart.getTotalPrice();
-        System.out.println(TEST_COST_FOR_PRODUCT);
-        System.out.println(totalPriceBeforeRemoving);
-        cart.remove(TEST_PRODUCT_ID);
-        System.out.println(cart.getTotalPrice());
+        cart.remove(product.getId());
         Assertions.assertEquals(cartSizeBeforeRemoving - 1, cart.getItems().size());
-        //todo А вот и ошибка с totalPrice корзины
-        //Assertions.assertEquals(totalPriceBeforeRemoving - TEST_COST_FOR_PRODUCT, cart.getTotalPrice());
+        Assertions.assertEquals(totalPriceBeforeRemoving - (product.getCost() * 2), cart.getTotalPrice());
     }
-    
+
     @Test
     public void cartMergeIsValidTest() {
         Cart cart1 = new Cart();
@@ -67,10 +62,10 @@ public class CartTest {
         Assertions.assertEquals(cart1.getTotalPrice(), cart1TotalPriceBeforeMerge + cart2TotalPriceBeforeMerge);
         Assertions.assertEquals(0, cart2.getTotalPrice());
     }
-    
+
     @Test
     public void cartClearIsValidTest() {
-        cartFillingWithDifferentProducts();
+        Cart cart = cartFillingWithDifferentProducts(TESTED_CART);
         int cartItemsQuantityBeforeClear = cart.getItems().size();
         int cartTotalPriceBeforeClear = cart.getTotalPrice();
         cart.clear();
@@ -80,22 +75,24 @@ public class CartTest {
         Assertions.assertEquals(0, cart.getTotalPrice());
     }
     
-    private void cartFillingWithTheSameProduct(Long productId) {
+    private Cart cartFillingWithTheSameProduct(Long productId, Cart cart) {
         ProductDto product = createTestedProduct(productId);
         for (int i = 0; i < 5; i++) {
             cart.add(product);
         }
+        return cart;
     }
     
-    private void cartFillingWithDifferentProducts() {
+    private Cart cartFillingWithDifferentProducts(Cart cart) {
         for (int i = 0; i < 5; i++) {
             ProductDto product = new ProductDto();
             product.setId(new Long(i + 1));
             product.setCost(new Integer(100 + i * 10));
             product.setTitle("Product № " + i);
-            product.setCategoryDto(new CategoryDto(new Long(i + 1), "Category №" + (i + 1)));
+            product.setCategoryDto(new CategoryDto(new Long(i + 1), "Category № " + (i + 1)));
             cart.add(product);
         }
+        return cart;
     }
     
     private ProductDto createTestedProduct(Long productId) {

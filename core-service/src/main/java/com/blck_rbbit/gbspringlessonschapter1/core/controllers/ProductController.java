@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.controllers;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.core.converters.ProductConverter;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.Product;
@@ -9,6 +9,7 @@ import com.blck_rbbit.gbspringlessonschapter1.core.validators.ProductValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -20,7 +21,7 @@ public class ProductController {
     private final ProductValidator productValidator;
     
     @GetMapping
-    public Page<ProductDto> getAllProducts(
+    public Page<ProductDto> getAllPageProducts(
             @RequestParam(name = "min_cost", required = false) Integer minCost,
             @RequestParam(name = "max_cost", required = false) Integer maxCost,
             @RequestParam(name = "id", required = false) Long id,

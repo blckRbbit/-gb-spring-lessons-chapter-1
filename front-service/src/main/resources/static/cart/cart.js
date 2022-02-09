@@ -20,7 +20,6 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
          }
 
          $scope.clearCart = function() {
-         //БЫЛО без api/v1/
             $http.get(contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/clear')
                 .then(function (response) {
                     $scope.loadCartProducts();

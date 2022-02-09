@@ -1,13 +1,16 @@
-package com.blck_rbbit.gbspringlessonschapter1.api.dto;
+package com.blck_rbbit.gbspringlessonschapter1.api.core;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class CategoryDto {
     private Long id;
     private String title;
+    
+    public CategoryDto() {
+    }
+    
+    public CategoryDto(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
     
     public Long getId() {
         return id;

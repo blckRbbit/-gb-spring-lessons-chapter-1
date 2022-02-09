@@ -67,6 +67,9 @@
 })();
 
 angular.module('app').controller('indexController', function ($scope, $rootScope, $http, $localStorage, $location, $window) {
+    let tempForTopPerMonth = "";
+    let tempForTopPerDay = "";
+
     $scope.tryToAuth = function () {
        $http.post('http://localhost:8701/auth/login', $scope.user)
            .then(function successCallback(response) {
@@ -90,12 +93,12 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
        $location.path('/');
     };
 
-   $scope.clearUser = function () {
+    $scope.clearUser = function () {
       delete $localStorage.springWebUser;
       $http.defaults.headers.common.Authorization = '';
    };
 
-   $rootScope.isUserLoggedIn = function () {
+    $rootScope.isUserLoggedIn = function () {
        if ($localStorage.springWebUser) {
          return true;
        } else {
@@ -103,4 +106,39 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
        }
    };
 
+    $scope.topProductsOfTheMonth = function() {
+       $http.get('http://localhost:8701/recommendation/api/v1/recommendations/top/month')
+           .then(function successCallback(response) {
+              $scope.topProducts = response.data;
+              for (let i = 0; i < $scope.topProducts.length -1; i++) {
+                   if (i > 5) {break;}
+                   let part = "  " + $scope.topProducts[i].productTitle + "(price: "
+                   + $scope.topProducts[i].price + ", orders: "
+                   + $scope.topProducts[i].quantity + ");  ";
+                   tempForTopPerMonth += part;
+              }
+              $scope.topOfTheMonth = tempForTopPerMonth;
+           });
+   }
+
+    $scope.topProductsOfTheDay = function() {
+       $http.get('http://localhost:8701/recommendation/api/v1/recommendations/top/day')
+           .then(function successCallback(response) {
+              $scope.topProductsPerDay = response.data;
+              for (let i = 0; i < $scope.topProductsPerDay.length - 1; i++) {
+                if (i > 5) {break;}
+                let part = "  " + $scope.topProductsPerDay[i].productTitle + "(price: "
+                + $scope.topProductsPerDay[i].pricePerProduct + ", orders: "
+                + $scope.topProductsPerDay[i].additionPerDay + ");  ";
+                tempForTopPerDay += part;
+              }
+              $scope.topOfTheDay = tempForTopPerDay;
+              $scope.window.reload();
+           });
+    }
+
+    $scope.topProductsOfTheMonth();
+    $scope.topProductsOfTheDay();
+    let updateTopPerMonth = setInterval(() => $scope.topProductsOfTheMonth(), 60000);
+    let updateTopPerDay = setInterval(() => $scope.topProductsOfTheDay(), 60000);
 });

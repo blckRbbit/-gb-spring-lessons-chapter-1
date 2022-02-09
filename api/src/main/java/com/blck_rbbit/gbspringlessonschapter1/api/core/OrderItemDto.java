@@ -1,8 +1,9 @@
-package com.blck_rbbit.gbspringlessonschapter1.api.dto;
+package com.blck_rbbit.gbspringlessonschapter1.api.core;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,6 +13,7 @@ public class OrderItemDto {
     private int quantity;
     private int price;
     private int pricePerProduct;
+    private LocalDateTime createdAt;
 
     public OrderItemDto(ProductDto productDto) {
         this.productId = productDto.getId();
@@ -64,6 +66,14 @@ public class OrderItemDto {
     
     public void setPricePerProduct(int pricePerProduct) {
         this.pricePerProduct = pricePerProduct;
+    }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
     
 }

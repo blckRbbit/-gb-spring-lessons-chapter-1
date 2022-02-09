@@ -11,7 +11,8 @@
 		<module>auth-service</module>
 		<module>cart-service</module>
 		<module>api</module>
-	</modules>
+        <module>recommendation-service</module>
+    </modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -41,12 +42,6 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.22</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>

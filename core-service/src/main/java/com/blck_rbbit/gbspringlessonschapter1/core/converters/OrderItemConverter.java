@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.converters;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.OrderItemDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.OrderItemDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.OrderItem;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +16,7 @@ public class OrderItemConverter {
                 orderItem.getProduct().getTitle(),
                 orderItem.getQuantity(),
                 orderItem.getPricePerProduct(),
-                orderItem.getPrice());
+                orderItem.getPrice(),
+                orderItem.getCreatedAt());
     }
 }

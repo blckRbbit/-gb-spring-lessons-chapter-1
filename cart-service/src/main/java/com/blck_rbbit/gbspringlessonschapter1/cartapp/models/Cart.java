@@ -1,10 +1,9 @@
-package com.blck_rbbit.gbspringlessonschapter1.cartapp.persist;
+package com.blck_rbbit.gbspringlessonschapter1.cartapp.models;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.OrderItemDto;
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.OrderItemDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@Component
 public class Cart {
     private List<OrderItemDto> items;
     private int totalPrice;
@@ -25,6 +23,7 @@ public class Cart {
         if (add(productDto.getId())) {
             return;
         }
+//        productDto.setQuantityAddedToCart(1L);
         items.add(new OrderItemDto(productDto));
         recalculate();
     }
@@ -56,7 +55,6 @@ public class Cart {
     }
 
     public void remove(Long productId) {
-        //todo после удаления элемента обнуляется общая цена в корзине
         items.removeIf(o -> o.getProductId().equals(productId));
         recalculate();
     }

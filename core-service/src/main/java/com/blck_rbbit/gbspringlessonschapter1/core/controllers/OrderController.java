@@ -1,8 +1,8 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.controllers;
 
 import com.blck_rbbit.gbspringlessonschapter1.core.converters.OrderConverter;
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.OrderDetailsDto;
-import com.blck_rbbit.gbspringlessonschapter1.core.dto.OrderDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.OrderDetailsDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.OrderDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,14 @@ public class OrderController {
     
     @GetMapping
     public List<OrderDto> getCurrentUserOrders(@RequestHeader String username) {
-        return orderService.findOrdersByUserName(username).stream()
+        return orderService.findOrdersByUsername(username).stream()
                 .map(orderConverter::entityToDto).collect(Collectors.toList());
     }
+    
+    @GetMapping("/all")
+    public List<OrderDto> getAllOrders() {
+        return orderService.findAllOrders().stream()
+                .map(orderConverter::entityToDto).collect(Collectors.toList());
+    }
+    
 }

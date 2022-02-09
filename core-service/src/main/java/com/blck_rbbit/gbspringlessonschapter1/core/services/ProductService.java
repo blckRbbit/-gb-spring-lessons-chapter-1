@@ -1,6 +1,6 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.services;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.exceptions.ResourceNotFoundException;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.Product;
 import com.blck_rbbit.gbspringlessonschapter1.core.repositories.ProductRepository;
@@ -65,9 +65,4 @@ public class ProductService {
         product.setTitle(productDTO.getTitle());
         product.setCost(productDTO.getCost());
     }
-    
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-    
 }

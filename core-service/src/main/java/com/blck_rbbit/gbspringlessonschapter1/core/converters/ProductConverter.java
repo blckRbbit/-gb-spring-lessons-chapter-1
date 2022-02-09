@@ -1,7 +1,7 @@
 package com.blck_rbbit.gbspringlessonschapter1.core.converters;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.CategoryDto;
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.ProductDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.CategoryDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.core.ProductDto;
 import com.blck_rbbit.gbspringlessonschapter1.core.entities.Product;
 import org.springframework.stereotype.Component;
 

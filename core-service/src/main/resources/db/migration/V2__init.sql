@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS products (
     category_id bigserial,
     title VARCHAR(255),
     cost int,
+    quantity_added_to_cart bigserial default 0,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp ,
     PRIMARY KEY (id)

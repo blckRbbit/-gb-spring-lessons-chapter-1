@@ -1,12 +1,15 @@
 package com.blck_rbbit.gbspringlessonschapter1.cartapp.controllers;
 
-import com.blck_rbbit.gbspringlessonschapter1.api.dto.CartDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.cart.CartDto;
+import com.blck_rbbit.gbspringlessonschapter1.api.cart.CartItemDto;
 import com.blck_rbbit.gbspringlessonschapter1.api.dto.StringResponse;
 import com.blck_rbbit.gbspringlessonschapter1.cartapp.converters.CartConverter;
 import com.blck_rbbit.gbspringlessonschapter1.cartapp.services.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -16,9 +19,14 @@ public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;
     
+    @GetMapping
+    public List<CartItemDto> getTopCartItemPerDay() {
+        return cartService.getTopCartItemPerDay();
+    }
+    
     @GetMapping("/{uuid}")
     public CartDto getCart(@RequestHeader (required = false) String username, @PathVariable String uuid) {
-        return cartConverter.entityToDTO(cartService.getCurrentCart(getCurrentCartUuid(username, uuid)));
+        return cartConverter.modelToDto(cartService.getCurrentCart(getCurrentCartUuid(username, uuid)));
     }
     
     @GetMapping("/generate")

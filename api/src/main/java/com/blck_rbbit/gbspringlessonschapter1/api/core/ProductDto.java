@@ -1,15 +1,22 @@
-package com.blck_rbbit.gbspringlessonschapter1.api.dto;
+package com.blck_rbbit.gbspringlessonschapter1.api.core;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductDto {
     private Long id;
     private String title;
     private Integer cost;
     private CategoryDto categoryDto;
+
+    
+    public ProductDto(Long id, String title, Integer cost, CategoryDto categoryDto) {
+        this.id = id;
+        this.title = title;
+        this.cost = cost;
+        this.categoryDto = categoryDto;
+    }
+    
+    public ProductDto() {
+    
+    }
     
     public Long getId() {
         return id;
@@ -42,5 +49,4 @@ public class ProductDto {
     public void setCategoryDto(CategoryDto categoryDto) {
         this.categoryDto = categoryDto;
     }
-    
 }
