@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <title>index</title>
+</head>
+
+<body>
+    <div class="container">
+        <div ng-controller="indexController">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+                        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <a class="navbar-brand" href="#!/">P-Store</a>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/store">Products <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/admin">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/cart">Cart</a>
+                        </li>
+                        <li class="nav-item" ng-show="isUserLoggedIn()">
+                            <a class="nav-link" href="#!/orders">My orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/registration">Registration</a>
+                        </li>
+                        <li class="nav-item" ng-show="!isUserLoggedIn()">
+                            <form class="align-middle" ng-submit="tryToAuth()">
+                                <div class="input-group input-group-sm" style="padding: 4px;">
+                                    <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
+                                           aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                                    <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
+                                           aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                                    <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
+                                            style="margin-left: 10px;" type="submit">Auth
+                                    </button>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                            <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Exit</button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="row ticket">
+                <div class="col col-3">
+                    <strong class="offer">Top products of the day! </strong>
+                </div>
+                <div class="marquee col col-9">{{topOfTheDay}}</div>
+            </div>
+
+            <div class="row ticket">
+                <div class="col col-3">
+                    <strong class="offer" id="blink">Top of the MONTH! </strong>
+                </div>
+                <div class="marquee col col-9">{{topOfTheMonth}}</div>
+            </div>
+        </div>
+        <ng-view></ng-view>
+    </div>
+    <script src="index.js"></script>
+    <script src="main/main.js"></script>
+    <script src="registration/registration.js"></script>
+    <script src="store/store.js"></script>
+    <script src="admin/admin.js"></script>
+    <script src="cart/cart.js"></script>
+    <script src="orders/orders.js"></script>
+</body>
+</html>

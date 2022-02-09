@@ -1,0 +1,114 @@
+button {
+    margin: 5px;
+}
+
+.row {
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin-top: 8px;
+}
+
+.nav-item button {
+    margin-top: 0px;
+}
+.page-title {
+    display: flex;
+    justify-content: center;
+}
+
+.offer {
+    color: red;
+}
+
+.offer_top-month {
+    font-weight: 700;
+    padding-left: 30px;
+}
+
+#blink {
+	-webkit-animation: blink 2s linear infinite;
+	animation: blink 2s linear infinite;
+	font-weight: bold;
+	color: color: #F00;
+}
+
+@-webkit-keyframes blink {
+	0% { color: #F00; }
+	50% { color: #FBB; }
+	100% { color: #F00; }
+}
+
+@keyframes blink {
+	0% { color: #F00; }
+	50% { color: #FBB; }
+	100% { color: #F00; }
+}
+
+
+.marquee {
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+   }
+   @keyframes marquee {
+    from { text-indent: 100%; }
+    to { text-indent: -110%; }
+   }
+
+.ticket {
+    width: 82vw;
+    padding: 5px;
+    margin-bottom: 5px;
+    background: #fadb6d;
+    border-radius: 5px;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.form-wrapper form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.col-products {
+    padding: 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.col-products table {
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.pages {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.page-item {
+    margin: 2px;
+}
+
+.registration {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}

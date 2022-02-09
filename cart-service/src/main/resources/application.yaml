@@ -1,0 +1,13 @@
+server:
+  port: 8704
+  servlet:
+    context-path: /market-cart
+utils:
+  cart:
+    prefix: SPRING_WEB_
+spring:
+  redis:
+    timeout: 30000
+integrations:
+  core-service:
+    url: http://localhost:8701/core
